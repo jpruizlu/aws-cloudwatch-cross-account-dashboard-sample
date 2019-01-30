@@ -44,7 +44,9 @@ Two new fields are available as part of the JSON widget definitions:
 
 ## Creating Dashboard in Cloud Formation
 
-The recommended approach is to create cross-account cross-region dashboards using Cloud Formation. You will find an example in [cross-account-monitoring.json](cross-account-monitoring.json).
+The recommended approach is to create cross-account cross-region dashboards using Cloud Formation. You will find an example in [cross-account-monitoring.json](cross-account-monitoring.json). 
+
+You will see the JSON dashboard definition in the DashboardBody parameter. You can copy and paste the JSON from the console by selecting Actions -> View/edit source from your dashboard. Once copied you need to escape quotes with the backslash before pastinginto the Cloud Formation template. 
 
 ### Editing Metric Widgets in Console
 
