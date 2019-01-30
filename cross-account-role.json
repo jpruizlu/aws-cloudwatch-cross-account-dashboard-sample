@@ -1,0 +1,58 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "AWS CloudFormation sample template. This template creates a role that another account can assume to read monitoring data.",
+
+  "Parameters" : {
+    "GrantAccountId": {
+      "Description" : "Account Id that can assume this role to read metrics and logs",
+      "Type": "Number",
+      "ConstraintDescription" : "Numeric only."
+    }
+  },
+
+  "Resources" : {
+
+    "CWCrossAccountRole" : {
+      "Type" : "AWS::IAM::Role",
+      "Properties" : {
+        "RoleName": "CloudWatchCrossAccount1",
+        "AssumeRolePolicyDocument": {
+          "Version" : "2012-10-17",
+          "Statement": [ {
+            "Effect": "Allow",
+            "Principal": { "AWS": { "Ref" : "GrantAccountId" } },
+            "Action": [ "sts:AssumeRole" ]
+          } ]
+        },
+        "Path": "/",
+        "Policies": [ {
+            "PolicyName": "monitoring-cross-account",
+            "PolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [{
+                  "Effect": "Allow",
+                  "Action": [
+                    "cloudwatch:Describe*",
+                    "cloudwatch:Get*",
+                    "cloudwatch:List*",
+                    "cloudwatch:Search*",
+                    "ec2:DescribeTags",
+                    "logs:Describe*",
+                   "logs:Filter*",
+                   "logs:Get*",
+                   "logs:Start*",
+                   "logs:Stop*"
+                  ],
+                  "Resource": [
+                   "*"
+                  ]
+                }]
+            }
+        } ]
+      }
+    }
+
+  }
+  
+}

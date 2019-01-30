@@ -1,0 +1,30 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "Create a CLoudWatch cross-account, cross-region dashboard by searching for EC2 metrics in a remote account.",
+
+  "Parameters" : {
+    "MetricAccountId": {
+      "Description" : "Account Id where the metrics exist.",
+      "Type": "Number",
+      "ConstraintDescription" : "Numeric only."
+    },
+    "LogGroup": {
+      "Description" : "Log group in the remote account.",
+      "Type": "String",
+      "ConstraintDescription" : "String only."
+    }
+  },
+
+  "Resources" : {
+
+    "CloudWatchDashboard" : {
+      "Type" : "AWS::CloudWatch::Dashboard",
+      "Properties" : {
+        "DashboardName" : "CrossAccountApplicationExample2",
+        "DashboardBody" : { "Fn::Join" : ["",["{\"widgets\":[{\"type\":\"log\",\"x\":0,\"y\":6,\"width\":24,\"height\":6,\"properties\":{\"query\":\"SOURCE'",{ "Ref" : "LogGroup" },"'|fields@timestamp,@message|sort@timestampdesc|limit20\",\"region\":\"us-east-1\",\"title\":\"APIRequests-SharedAcct\",\"accountId\":",{ "Ref" : "MetricAccountId" },",\"role\":\"CloudWatchCrossAccount\"}},{\"type\":\"metric\",\"x\":0,\"y\":12,\"width\":15,\"height\":6,\"properties\":{\"metrics\":[[{\"expression\":\"SEARCH('{AWS/EC2,InstanceId}MetricName=\\\"CPUUtilization\\\"','Average',300)\",\"label\":\"Expression1\",\"id\":\"e1\"}]],\"view\":\"timeSeries\",\"stacked\":false,\"region\":\"us-east-1\",\"accountId\":",{ "Ref" : "MetricAccountId" },",\"role\":\"CloudWatchCrossAccount\",\"title\":\"CPUUtilization\"}}]}"]]}
+      }
+    }
+    
+  }
+}
