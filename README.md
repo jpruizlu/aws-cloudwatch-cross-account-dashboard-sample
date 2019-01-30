@@ -32,15 +32,15 @@ Allow the user in account A to assume a role in account B. You must associate th
 ```
 ### Step 2: Create Cross-Account Role in Remote Account
 
-Create a role in account B that grants read-only access to metrics, alarms and logs to account A. See file [cross-account-role.json](cross-account-role.json)
+Create a role in account B that grants read-only access to metrics, alarms and logs to account A. See file [cross-account-role.json](cross-account-role.json).
 
 ## 2.	Creating a cross-account, cross region dashboard
 
 Once the require IAM permissions are in place you can create your cross-account, cross-region dashboard. The recommended approach is to create the dashboard using Cloud Formation. 
 
 Two new fields are available as part of the JSON widget definitions:
-•	accountId – the source account for the metric data
-•	role – the name of the role to assume in the source account. This can be the role name or the full ARN of the role. 
+*	accountId – the source account for the metric data
+*	role – the name of the role to assume in the source account. This can be the role name or the full ARN of the role. 
 
 ## Creating Dashboard in Cloud Formation
 
@@ -126,11 +126,13 @@ Add accountId and role entries to properties of widget. Full example:
 ## Troubleshooting
 
 If you haven't setup cross-account access correctly your widgets will display a generic error. We are working on making this more specific to help teams debug setup issues, but in the meantime here are the main gotchas:
-•	You must be logged into the master account as an IAM user - root login sessions are not able to assume IAM roles.
-•	The master account IAM user must have permission to assume roles,
+*	You must be logged into the master account as an IAM user - root login sessions are not able to assume IAM roles.
+*	The master account IAM user must have permission to assume roles -
+```json
 { "Effect": "Allow", "Action": "sts:AssumeRole", "Resource": "arn:aws:iam::*::role/*" }
-•	The role in each remote account must have enough permissions to display the data for the particular widget.
-•	If you are not seeing any results in a Log Insights widget, ensure that the time period of the dashboard matches what you expect to see your log data. The default period on the dashboard is 3hrs. 
+```
+*	The role in each remote account must have enough permissions to display the data for the particular widget.
+*	If you are not seeing any results in a Log Insights widget, ensure that the time period of the dashboard matches what you expect to see your log data. The default period on the dashboard is 3hrs. 
 
 ## License Summary
 
