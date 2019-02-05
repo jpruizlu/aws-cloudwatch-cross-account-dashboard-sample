@@ -141,10 +141,10 @@ Add accountId and role entries to properties of widget. Full example:
                 "title": "XA - Average CPUUtilization",
                 "annotations": {
                     "alarms": [
-                        "arn:aws:cloudwatch:us-east-1:585994253345:alarm:XA - Average CPUUtilization"
+                        "arn:aws:cloudwatch:us-east-1:12345678:alarm:XA - Average CPUUtilization"
                     ]
                 },
-                "accountId": 585994253345,
+                "accountId": 12345678,
                 "role": "CloudWatchCrossAccount",
                 "view": "timeSeries",
                 "stacked": false
