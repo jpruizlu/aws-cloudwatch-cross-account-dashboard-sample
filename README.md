@@ -125,6 +125,35 @@ Add accountId and role entries to properties of widget. Full example:
 }
 ```
 
+### Alarm Widget
+
+Add accountId and role entries to properties of widget. Full example:
+```json
+{
+    "widgets": [
+        {
+            "type": "metric",
+            "x": 6,
+            "y": 2,
+            "width": 6,
+            "height": 6,
+            "properties": {
+                "title": "XA - Average CPUUtilization",
+                "annotations": {
+                    "alarms": [
+                        "arn:aws:cloudwatch:us-east-1:585994253345:alarm:XA - Average CPUUtilization"
+                    ]
+                },
+                "accountId": 585994253345,
+                "role": "CloudWatchCrossAccount",
+                "view": "timeSeries",
+                "stacked": false
+              }
+        }
+    ]
+}
+```
+
 ## Troubleshooting
 
 If you haven't setup cross-account access correctly your widgets will display a generic error. We are working on making this more specific to help teams debug setup issues, but in the meantime here are the main gotchas:
