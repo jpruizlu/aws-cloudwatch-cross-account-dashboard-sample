@@ -1,0 +1,63 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "AWS CloudFormation sample template. This template creates a role that can be assumed by any account in an AWS Organization.",
+
+  "Parameters" : {
+    "OrganizationId": {
+      "Description" : "AWS Organization Id - all accounts in this organization can assume this role.",
+      "Type": "String",
+      "ConstraintDescription" : "String only."
+    }
+  },
+
+  "Resources" : {
+
+    "CWCrossAccountOrgRole" : {
+      "Type" : "AWS::IAM::Role",
+      "Properties" : {
+        "RoleName": "CloudWatchCrossOrganization",
+        "AssumeRolePolicyDocument": {
+          "Version": "2012-10-17",
+          "Statement": [{
+              "Effect": "Allow",
+              "Principal": { "AWS": "*"},
+              "Condition": {
+                  "StringEquals": {
+                      "aws:PrincipalOrgID": { "Ref" : "OrganizationId" }
+                    }             
+              },
+              "Action": "sts:AssumeRole"
+            }]
+        },
+        "Path": "/",
+        "Policies": [ {
+            "PolicyName": "monitoring-cross-account",
+            "PolicyDocument": {
+                "Version": "2012-10-17",
+                "Statement": [{
+                  "Effect": "Allow",
+                  "Action": [
+                    "cloudwatch:Describe*",
+                    "cloudwatch:Get*",
+                    "cloudwatch:List*",
+                    "cloudwatch:Search*",
+                    "ec2:DescribeTags",
+                    "logs:Describe*",
+                    "logs:Filter*",
+                    "logs:Get*",
+                    "logs:Start*",
+                    "logs:Stop*"
+                  ],
+                  "Resource": [
+                   "*"
+                  ]
+                }]
+            }
+        } ]
+      }
+    }
+
+  }
+  
+}
