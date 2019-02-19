@@ -17,7 +17,7 @@ Scenario: You want to create a dashboard in account A that contains a metric or 
 
 ### Step 1: AssumeRole Permission in Local Account
 
-Allow the user in account A to assume a role in account B. You must associate this permission with the user that is viewing the dashboard. See file [assume-role-permission.json](assume-role-permission.json).:
+Allow the user in account A to assume a role in account B. You must associate this permission with the user that is viewing the dashboard. See file [assume-role-permission.json](assume-role-permission.json):
 ```json
 {
     "Version": "2012-10-17",
