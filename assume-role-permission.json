@@ -1,0 +1,33 @@
+{
+  "AWSTemplateFormatVersion" : "2010-09-09",
+
+  "Description" : "AWS CloudFormation sample template. This template enables the assume role permission for users in the specified account.",
+
+  "Parameters" : {
+    "MyRole": {
+      "Description" : "The dashboard users role that you want to grant the assume role permission for cross-account.",
+      "Type": "String",
+      "ConstraintDescription" : "String only."
+    }
+  },
+
+  "Resources" : {
+
+    "CWCrossAccountAssumeRolePolicy" : {
+      "Type" : "AWS::IAM::Policy",
+      "Properties" : {
+        "PolicyName" : "CWCrossAccountAssumeRole",
+        "Roles": [ { "Ref" : "MyRole" } ],
+        "PolicyDocument" : {
+          "Version": "2012-10-17",
+          "Statement": [{
+              "Action": ["sts:AssumeRole"],
+              "Resource": ["arn:aws:iam::*:role/CloudWatchCrossAccount"],
+              "Effect": "Allow"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
