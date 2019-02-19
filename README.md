@@ -34,6 +34,10 @@ Allow the user in account A to assume a role in account B. You must associate th
 
 Create a role in account B that grants read-only access to metrics, alarms and logs to account A. See file [cross-account-role.json](cross-account-role.json).
 
+### Creating Cross-Account Role for an AWS Organization
+
+Step 2 above describes how to create the CloudWatch cross-account role for a single account to access. Alternatively, you can allow any account in your AWS Organization to assume the role by specifying the OrgId in the conditions of the policy. See file [cross-account-role-for-organization.json](cross-account-role-for-organization.json).
+
 ## 2.	Creating a cross-account, cross region dashboard
 
 Once the require IAM permissions are in place you can create your cross-account, cross-region dashboard. The recommended approach is to create the dashboard using Cloud Formation. 
